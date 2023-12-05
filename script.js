@@ -1,7 +1,10 @@
 $(document).ready(function(){
     populateQuotes();
-    populateTutorials();
+    loadVideos('https://smileschool-api.hbtn.info/popular-tutorials', '#carouselExampleControls2');
+    loadVideos('https://smileschool-api.hbtn.info/latest-videos', '#carouselExampleControls3');
 });
+
+/** Quotes Carousel Loader */
 
 function fetchQuotes() {
     return $.ajax({
@@ -54,67 +57,86 @@ function populateQuotes() {
         .catch(handleFetchError);
 }
 
-function populateTutorials() {
-    $.ajax({
-        url: "https://smileschool-api.hbtn.info/popular-tutorials",
-        method: "GET",
-        success: function(response) {
-            const tutorialCarousel = $('#tutorial-carousel .carousel-inner');
-
-            response.forEach(function(tutorial, index) {
-                const carouselItem = createTutorialCarouselItem(tutorial, index === 0);
-                tutorialCarousel.append(carouselItem);
-            });
-
-            // Initialize the Bootstrap carousel after items have been appended
-            $('#tutorial-carousel').carousel();
-
-            // Show the carousel and hide the loader
-            $('#loading-tutorials').addClass('d-none');
-            $('#tutorial-carousel').removeClass('d-none');
-        },
-        error: function() {
-            alert("Error loading tutorials");
-        }
-    });
-}
-
-
-
-
-function createTutorialCarouselItem(tutorial, isActive) {
-    const { thumb_url, title, 'sub-title': subTitle, author_pic_url, author, star, duration } = tutorial;
-
-    const carouselItem = $('<div>', { class: `carousel-item col-12 col-sm-6 col-md-4 col-lg-3 ${isActive ? 'active' : ''}` });
-    const card = $('<div>', { class: 'card mx-auto d-block' });
-
-    const cardImage = $('<img>', { class: 'card-img-top position-relative', src: thumb_url, alt: 'Card image cap' });
-    const cardImageOverlay = $('<div>', { class: 'card-image position-absolute' }).append($('<img>', { src: 'images/play.png', alt: '', width: '64px', height: '64px' }));
-
-    const cardBody = $('<div>', { class: 'card-body py-3' });
-    const cardTitle = $('<h4>', { class: 'card-title font-weight-bold color-text' }).text(title);
-    const cardText = $('<p>', { class: 'card-text text-muted' }).text(subTitle);
-
-    const authorBlock = $('<div>', { class: 'd-flex align-items-center' });
-    const authorImage = $('<img>', { src: author_pic_url, class: 'rounded-circle', alt: '...', width: '40px', height: '40px' });
-    const authorName = $('<div>').append($('<h4>', { class: 'font-weight-bold pl-3' }).append($('<span>', { class: 'color' }).text(author)));
-
-    const ratingBlock = $('<div>', { class: 'd-flex mt-2 justify-content-between' });
-    const ratingStars = $('<div>', { class: 'rating' });
-    const minutes = $('<div>', { class: 'minutes' }).append($('<p>').append($('<span>', { class: 'color' }).text(duration)));
-
-    cardBody.append(cardTitle, cardText, authorBlock, ratingBlock);
-    authorBlock.append(authorImage, authorName);
-    ratingBlock.append(ratingStars, minutes);
-
+/** Popular Carousel Loader */
+function createVideoCard(video) {
+    let stars = '';
     for (let i = 0; i < 5; i++) {
-        if (i < star) {
-            ratingStars.append($('<img>', { src: 'images/star_on.png', alt: '', width: '15px', height: '15px' }));
+        if (i < video.star) {
+            stars += '<img src="images/star_on.png" alt="Star On" width="15px" />';
         } else {
-            ratingStars.append($('<img>', { src: 'images/star_off.png', alt: '', width: '15px', height: '15px' }));
+            stars += '<img src="images/star_off.png" alt="Star Off" width="15px" />';
         }
     }
+    let cardCol = $('<div>').addClass('col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center justify-content-md-end justify-content-lg-center');
 
-    carouselItem.append(card.append(cardImage, cardImageOverlay, cardBody));
-    return carouselItem;
+    // Create card HTML
+    let cardHtml = `
+        <div class="card">
+            <img src="${video.thumb_url}" class="card-img-top" alt="Video thumbnail" />
+            <div class="card-img-overlay text-center">
+                <img src="images/play.png" alt="Play" width="64px" class="align-self-center play-overlay" />
+            </div>
+            <div class="card-body">
+                <h5 class="card-title font-weight-bold">${video.title}</h5>
+                <p class="card-text text-muted">${video['sub-title']}</p>
+                <div class="creator d-flex align-items-center">
+                    <img src="${video.author_pic_url}" alt="Creator of Video" width="30px" class="rounded-circle" />
+                    <h6 class="pl-3 m-0 main-color">${video.author}</h6>
+                </div>
+                <div class="info pt-3 d-flex justify-content-between">
+                    <div class="rating ">${video.star > 0 ? stars : ''}
+                    </div>
+                    <span class="main-color">${video.duration}</span>
+                </div>
+            </div>
+        </div>
+    `;
+    cardCol.append(cardHtml);
+
+    return cardCol;
+}
+
+function getItemsPerSlide() {
+    const width = $(window).width();
+    if (width >= 1200) {
+        return 4; //Show 4 at a time
+    } else if (width >= 768) {
+        return 2; //Show 2 on medium screens
+    } else {
+        return 1; //Show 1 on small screens
+    }
+}
+
+function loadVideos(url, idSelector) {
+    const carouselInner = $(idSelector + ' .carousel-inner');
+    $('.loader2').show();
+
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (videos) {
+            $('.loader2').hide();
+            carouselInner.empty();
+
+            let itemsPerSlide = getItemsPerSlide();
+
+            $.each(videos, function (index, video) {
+                const carouselItem = $('<div>').addClass('carousel-item');
+                const videoCard = createVideoCard(video);
+                carouselItem.append(videoCard);
+
+                if (index % itemsPerSlide === 0) {
+                    carouselInner.append(carouselItem);
+                    if (index === 0) {
+                        carouselItem.addClass('active');
+                    }
+                }
+            });
+        },
+        error: function (error) {
+            $('.loader2').hide();
+            console.error('Error:', error);
+        },
+    });
 }
