@@ -122,9 +122,10 @@ function loadVideos(url, idSelector) {
             let itemsPerSlide = getItemsPerSlide();
 
             $.each(videos, function (index, video) {
-                const carouselItem = $('<div>').addClass('carousel-item');
                 const videoCard = createVideoCard(video);
-                carouselItem.append(videoCard);
+                const carouselItem = $('<div>').addClass('carousel-item'); // Create new carousel item for each card
+
+                carouselItem.append(videoCard); // Append the card to the new carousel item
 
                 if (index % itemsPerSlide === 0) {
                     carouselInner.append(carouselItem);
