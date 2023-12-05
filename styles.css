@@ -26,6 +26,7 @@
     height: 80px;
     animation: spin 2s linear infinite;
     margin: auto;
+    position: relative;
 }
 
 @keyframes spin {
@@ -208,6 +209,7 @@
   height: 392px;
   background-color: var(--main-color);
 }
+
 
 .quotes .carousel-item img {
   width: 160px;
