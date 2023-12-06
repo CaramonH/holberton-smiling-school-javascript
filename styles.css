@@ -17,16 +17,15 @@
   --faq-pad-outer: 7vw;
 }
 
-/* Loader */
+/* LOADER */
 .loader {
-    border: 10px solid #f3f3f3;
-    border-top: 10px solid #C271FF;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: spin 2s linear infinite;
-    margin: auto;
-    position: relative;
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #C271FF;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+  margin: auto;
 }
 
 @keyframes spin {
@@ -34,8 +33,8 @@
   100% { transform: rotate(360deg); }
 }
 
-
 /* General Styles  */
+
 .body {
   font-family: var(--font-family-1);
 }
@@ -182,18 +181,12 @@
   padding-bottom: 98px;
 }
 
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .pro1,
   .pro2 {
     padding-bottom: 58px;
   }
-  
-  /* Option 2 implementation */
-  .card {
-    width: calc(100% / 2) !important; /* Ensure equal width on small screens */
-  }
 }
-
 
 @media screen and (max-width: 575px) {
   .hero h1 {
@@ -922,29 +915,4 @@
   .results .card {
     width: 90vw;
   }
-}
-
-.slick-prev::before {
-  width: 40px; /* Set the width of the arrow */
-  height: 40px; /* Set the height of the arrow */
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1;
-  background-image: url('./images/arrow_black_left.png'); /* Replace with your image path */
-  background-size: cover; /* Adjust the background size as needed */
-  cursor: pointer;
-  border: none;
-  outline: none;
-}
-
-.slick-next::before {
-  width: 40px; /* Set the width of the arrow */
-  height: 40px; /* Set the height of the arrow */
-  position: absolute;
-  background-image: url('./images/arrow_black_right.png'); /* Replace with your image path */
-  background-size: cover; /* Adjust the background size as needed */
-  cursor: pointer;
-  border: none;
-  outline: none;
 }
