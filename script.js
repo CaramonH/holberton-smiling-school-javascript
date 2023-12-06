@@ -57,7 +57,7 @@ function populateQuotes() {
         .catch(handleFetchError);
 }
 
-/** Popular Carousel Loader */
+/** Videos Carousel Loader */
 function createVideoCard(video) {
     let stars = '';
     for (let i = 0; i < 5; i++) {
@@ -99,11 +99,11 @@ function createVideoCard(video) {
 function getItemsPerSlide() {
     const width = $(window).width();
     if (width >= 1200) {
-        return 4; //Show 4 at a time
+        return 4; //Show 4 at once
     } else if (width >= 768) {
-        return 2; //Show 2 on medium screens
+        return 2; //Show 2 on medium
     } else {
-        return 1; //Show 1 on small screens
+        return 1; //Show 1 on small
     }
 }
 
