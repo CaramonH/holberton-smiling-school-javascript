@@ -1,7 +1,12 @@
-$(document).ready(function(){
-    populateQuotes();
-    populateTutorials();
-    populateLatest();
+$(document).ready(function () {
+    if (window.location.pathname === '/homepage.html') {
+        populateQuotes();
+        populateTutorials();
+        populateLatest();
+    }
+    if (window.location.pathname === '/pricing.html') {
+        populateQuotes();
+    }
 });
 
 /** Quotes Carousel Loader */
@@ -155,7 +160,7 @@ function populateLatest() {
                 const card = createCard(tutorial);
                 carousel.append(card);
 
-                // If first item, add active class
+                // If first item, add as the active class
                 if (index === 0) {
                     card.addClass('active');
                 }
@@ -207,7 +212,7 @@ function createCard(tutorial) {
 
 function initializeCarousel2(carousel) {
     carousel.slick({
-        slidesToShow: 3.99, // Adjusted for consistent display across different screen sizes
+        slidesToShow: 3.99,
         slidesToScroll: 1,
         prevArrow: $('.prev2'),
         nextArrow: $('.next2'),
