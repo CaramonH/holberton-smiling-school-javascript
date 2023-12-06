@@ -1,7 +1,6 @@
 $(document).ready(function(){
     populateQuotes();
-    loadVideos('https://smileschool-api.hbtn.info/popular-tutorials', '#carouselExampleControls2');
-    loadVideos('https://smileschool-api.hbtn.info/latest-videos', '#carouselExampleControls3');
+    PopulateTutorials();
 });
 
 /** Quotes Carousel Loader */
@@ -58,86 +57,86 @@ function populateQuotes() {
 }
 
 /** Videos Carousel Loader */
-function createVideoCard(video) {
-    let stars = '';
-    for (let i = 0; i < 5; i++) {
-        if (i < video.star) {
-            stars += '<img src="images/star_on.png" alt="Star On" width="15px" />';
-        } else {
-            stars += '<img src="images/star_off.png" alt="Star Off" width="15px" />';
+function PopulateTutorials() {
+  $.ajax({
+    url: "https://smileschool-api.hbtn.info/popular-tutorials",
+    method: "GET",
+    success: function (response) {
+      const carousel = $('#tutorial-carousel');
+
+      response.forEach((tutorial, index) => {
+        const card = createCard(tutorial);
+        carousel.append(card);
+
+        // If first item, add active class
+        if (index === 0) {
+          card.addClass('active');
         }
-    }
-    let cardCol = $('<div>').addClass('col-12 col-sm-6 col-md-6 col-lg-3 d-flex justify-content-center justify-content-md-end justify-content-lg-center');
+      });
 
-    // Create card HTML
-    let cardHtml = `
-        <div class="card">
-            <img src="${video.thumb_url}" class="card-img-top" alt="Video thumbnail" />
-            <div class="card-img-overlay text-center">
-                <img src="images/play.png" alt="Play" width="64px" class="align-self-center play-overlay" />
-            </div>
-            <div class="card-body">
-                <h5 class="card-title font-weight-bold">${video.title}</h5>
-                <p class="card-text text-muted">${video['sub-title']}</p>
-                <div class="creator d-flex align-items-center">
-                    <img src="${video.author_pic_url}" alt="Creator of Video" width="30px" class="rounded-circle" />
-                    <h6 class="pl-3 m-0 main-color">${video.author}</h6>
-                </div>
-                <div class="info pt-3 d-flex justify-content-between">
-                    <div class="rating ">${video.star > 0 ? stars : ''}
-                    </div>
-                    <span class="main-color">${video.duration}</span>
-                </div>
-            </div>
-        </div>
-    `;
-    cardCol.append(cardHtml);
+      initializeCarousel(carousel);
 
-    return cardCol;
+      $('#loading-tutorials').addClass('d-none');
+      $('#tutorial-carousel').removeClass('d-none');
+    },
+    error: function () {
+      alert("Error loading tutorials");
+    },
+  });
 }
 
-function getItemsPerSlide() {
-    const width = $(window).width();
-    if (width >= 1200) {
-        return 4; //Show 4 at once
-    } else if (width >= 768) {
-        return 2; //Show 2 on medium
-    } else {
-        return 1; //Show 1 on small
-    }
+function createCard(tutorial) {
+  const card = $('<div>').addClass('card p-3');
+  const thumbnail = $('<img>').addClass('card-img-top').attr('src', tutorial['thumb_url']);
+
+  const overlay = $('<div>').addClass('card-img-overlay d-flex justify-content-center align-items-center text-center');
+  const playButton = $('<img>').addClass('play-overlay').attr('src', 'images/play.png').attr('width', '64px');
+  overlay.append(playButton);
+
+  const body = $('<div>').addClass('card-body');
+  const title = $('<h5>').addClass('card-title font-weight-bold').text(tutorial['title']);
+  const description = $('<p>').addClass('card-text text-muted').text(tutorial['sub-title']);
+
+  const author = $('<div>').addClass('creator d-flex align-items-center');
+  const authorImage = $('<img>').addClass('rounded-circle').attr('src', tutorial['author_pic_url']).attr('width', '30px');
+  const authorName = $('<h6>').addClass('pl-3 m-0 main-color').text(tutorial['author']);
+  author.append(authorImage, authorName);
+
+  const footer = $('<div>').addClass('info pt-3 d-flex justify-content-between');
+  const rating = $('<div>').addClass('rating d-flex');
+  for (let i = 1; i < 6; i++) {
+    const star = i <= tutorial['star'] ? $('<img>').attr('src', 'images/star_on.png') : $('<img>').attr('src', 'images/star_off.png');
+    star.attr('width', '15px').attr('height', '15px');
+    rating.append(star);
+  }
+  const time = $('<span>').addClass('main-color').text(tutorial['duration']);
+
+  footer.append(rating, time);
+
+  body.append(title, description, author, footer);
+  card.append(thumbnail, overlay, body);
+  return card;
 }
 
-function loadVideos(url, idSelector) {
-    const carouselInner = $(idSelector + ' .carousel-inner');
-    $('.loader2').show();
-
-    $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        success: function (videos) {
-            $('.loader2').hide();
-            carouselInner.empty();
-
-            let itemsPerSlide = getItemsPerSlide();
-
-            $.each(videos, function (index, video) {
-                const videoCard = createVideoCard(video);
-                const carouselItem = $('<div>').addClass('carousel-item'); // Create new carousel item for each card
-
-                carouselItem.append(videoCard); // Append the card to the new carousel item
-
-                if (index % itemsPerSlide === 0) {
-                    carouselInner.append(carouselItem);
-                    if (index === 0) {
-                        carouselItem.addClass('active');
-                    }
-                }
-            });
+function initializeCarousel(carousel) {
+  carousel.slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    prevArrow: $('.prev1'),
+    nextArrow: $('.next1'),
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
         },
-        error: function (error) {
-            $('.loader2').hide();
-            console.error('Error:', error);
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
         },
-    });
+      },
+    ],
+  });
 }

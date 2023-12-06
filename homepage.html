@@ -186,23 +186,51 @@
       <!-- POPULAR TUTORIALS -->
       <section class="popular section d-flex align-items-center">
         <div class="container">
-          <header class="section-header">
-            <h2 class="text-center">Most <span class="main-color">popular</span> tutorials</h2>
+          <header class="section-header pb-5">
+            <h2 class="text-center">
+              Most
+              <span class="main-color">popular</span> tutorials
+            </h2>
           </header>
-          <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner carousel2">
-              <div class="loader2" mb-5></div>
-              <div class="loadItems2 d-flex"></div>
+          <div
+            id="carouselExampleControls2"
+            class="carousel slide"
+            data-ride="carousel"
+          >
+            <div class="carousel-container">
+              <div class="loader mb-5" id="loading-tutorials"></div>
+              <div class="carousel d-none" id="tutorial-carousel">
+                <!-- | ------------------------------CARDS GO HERE-------------------------------------- | -->
+              </div>
+              <a
+                class="carousel-control-prev arrow-left pr-2"
+                href="#carouselExampleControls2"
+                role="button"
+                data-slide="prev"
+              >
+                <img
+                  src="images/arrow_black_left.png"
+                  alt="Quote Previous"
+                  aria-hidden="true"
+                  class="prev1"
+                />
+                <span class="sr-only">Previous</span>
+              </a>
+              <a
+                class="carousel-control-next arrow-right pl-2"
+                href="#carouselExampleControls2"
+                role="button"
+                data-slide="next"
+              >
+                <img
+                  src="images/arrow_black_right.png"
+                  alt="Quote Next"
+                  aria-hidden="true"
+                  class="next1"
+                />
+                <span class="sr-only">Next</span>
+              </a>
             </div>
-            <!-- Carousel Control (left and right arrows) -->
-            <a class="carousel-control-prev arrow-left" href="#carouselExampleControls2" role="button" data-slide="prev">
-              <img src="images/arrow_black_left.png" alt="Quote Previous" aria-hidden="true" />
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next arrow-right" href="#carouselExampleControls2" role="button" data-slide="next">
-              <img src="images/arrow_black_right.png" alt="Quote Next" aria-hidden="true" />
-              <span class="sr-only">Next</span>
-            </a>
           </div>
         </div>
       </section>
@@ -272,26 +300,53 @@
       <!-- LATEST VIDEO SECTION -->
       <section class="popular section d-flex align-items-center">
         <div class="container">
-          <header class="section-header">
+          <header class="section-header pb-5">
             <h2 class="text-center">
               <span class="main-color">Latest</span> videos
             </h2>
-        </header>
-        <div id="carouselExampleControls3" class="carousel slide" data-ride="carousel">
-          <div class="carousel-inner" role="listbox">
-            <!-- Carousel items will be appended here dynamically using JavaScript -->
+          </header>
+          <div
+            id="carouselExampleControls2"
+            class="carousel slide"
+            data-ride="carousel"
+          >
+            <div class="carousel-container">
+              <div class="loader mb-5" id="loading-latest"></div>
+              <div class="carousel d-none" id="latest-carousel">
+                <!-- | ------------------------------CARDS GO HERE-------------------------------------- | -->
+              </div>
+              <a
+                class="carousel-control-prev prev2 arrow-left pr-2"
+                href="#carouselExampleControls2"
+                role="button"
+                data-slide="prev"
+              >
+                <img
+                  src="images/arrow_black_left.png"
+                  alt="Quote Previous"
+                  aria-hidden="true"
+                  class="prev2"
+                />
+                <span class="sr-only">Previous</span>
+              </a>
+              <a
+                class="carousel-control-next next2 arrow-right pl-2"
+                href="#carouselExampleControls2"
+                role="button"
+                data-slide="next"
+              >
+                <img
+                  src="images/arrow_black_right.png"
+                  alt="Quote Next"
+                  aria-hidden="true"
+                  class="next2"
+                />
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
           </div>
-          <a class="carousel-control-prev arrow-left" href="#carouselExampleControls3" role="button" data-slide="prev">
-            <img src="images/arrow_black_left.png" alt=" Previous" aria-hidden="true" />
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="carousel-control-next arrow-right" href="#carouselExampleControls3" role="button" data-slide="next">
-            <img src="images/arrow_black_right.png" alt=" Next" aria-hidden="true" />
-            <span class="sr-only">Next</span>
-          </a>
         </div>
-      </div>
-    </section>
+      </section>
     </main>
     <!-- FOOTER -->
     <footer class="footer d-flex align-items-center justify-content-center">
