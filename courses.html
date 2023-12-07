@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>holberton-smiling</title>
+
     <!-- Custom and Font Styles  -->
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="font-style.css" />
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap"
@@ -24,7 +26,6 @@
       integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
       crossorigin="anonymous"
     ></script>
-
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -35,13 +36,20 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
-
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="script.js"></script>
+
   </head>
   <body class="body">
     <header class="header courses-header">
@@ -187,12 +195,14 @@
           </div>
         </div>
       </section>
+      <!-- COURSES -->
       <section class="section results">
-        <div class="container">
+        <div class="loader my-5" id="loading-courses"></div>
+        <div class="container d-none" id="course-container"></div>
           <div class="section-title">
             <span class="text-muted video-count">11 videos</span>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 col-sm-4 col-lg-3 d-flex justify-content-center">
               <div class="card">
                 <img
@@ -899,7 +909,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
     </main>
     <footer class="footer d-flex align-items-center justify-content-center">
       <div class="container">

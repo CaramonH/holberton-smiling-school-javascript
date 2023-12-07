@@ -7,6 +7,9 @@ $(document).ready(function () {
     if (window.location.pathname === '/pricing.html') {
         populateQuotes();
     }
+    if (window.location.pathname === 'courses.html') {
+        populateCourses();
+    }
 });
 
 /** Quotes Carousel Loader */
@@ -182,7 +185,14 @@ function createCard(tutorial) {
     const thumbnail = $('<img>').addClass('card-img-top').attr('src', tutorial['thumb_url']);
 
     const overlay = $('<div>').addClass('card-img-overlay d-flex justify-content-center align-items-center text-center');
-    const playButton = $('<img>').addClass('play-overlay').attr('src', 'images/play.png').attr('width', '64px');
+    const playButton = $('<img>').addClass('play-overlay').attr('src', 'images/play.png').attr('width', '64px').css({
+        position: 'absolute',
+        top: '18%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+});
+
+    thumbnail.append(overlay);
     overlay.append(playButton);
 
     const body = $('<div>').addClass('card-body');
@@ -232,3 +242,5 @@ function initializeCarousel2(carousel) {
         ],
     });
 }
+
+/** Courses */
